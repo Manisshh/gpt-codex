@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/career-graph.schema.json",
+  "title": "Career Graph Dataset",
+  "type": "object",
+  "required": ["meta", "skills", "roles", "transitions", "tracks", "certifications"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["version", "domain", "lastUpdated"],
+      "properties": {
+        "version": { "type": "string" },
+        "domain": { "type": "string" },
+        "lastUpdated": { "type": "string", "format": "date" }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skill" }
+    },
+    "roles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/role" }
+    },
+    "transitions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/transition" }
+    },
+    "tracks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/track" }
+    },
+    "certifications": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/certification" }
+    }
+  },
+  "$defs": {
+    "skill": {
+      "type": "object",
+      "required": ["id", "name", "category", "level"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "level": { "type": "string", "enum": ["foundation", "intermediate", "advanced", "expert"] },
+        "estimatedWeeks": { "type": "number" },
+        "prerequisites": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "role": {
+      "type": "object",
+      "required": ["id", "name", "family", "level", "requiredSkills"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "family": { "type": "string" },
+        "level": {
+          "type": "string",
+          "enum": ["beginner", "associate", "mid", "senior", "staff", "principal", "director", "vp", "executive"]
+        },
+        "track": { "type": "string" },
+        "futureRole": { "type": "boolean" },
+        "requiredSkills": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "optionalSkills": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "certifications": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "required": ["fromRoleId", "toRoleId", "difficulty", "estimatedMonths"],
+      "properties": {
+        "fromRoleId": { "type": "string" },
+        "toRoleId": { "type": "string" },
+        "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "estimatedMonths": { "type": "number" },
+        "recommended": { "type": "boolean" },
+        "pathType": { "type": "string", "enum": ["individual_contributor", "management", "specialist", "cross_domain"] }
+      }
+    },
+    "track": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["engineering", "management", "ai", "industry_specific"] }
+      }
+    },
+    "certification": {
+      "type": "object",
+      "required": ["id", "name", "provider"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "provider": { "type": "string" },
+        "skillIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

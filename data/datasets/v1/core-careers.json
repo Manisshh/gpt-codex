@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "domain": "technology",
+    "lastUpdated": "2026-01-01"
+  },
+  "skills": [
+    { "id": "s-html-css", "name": "HTML/CSS", "category": "frontend", "level": "foundation", "estimatedWeeks": 3, "prerequisites": [] },
+    { "id": "s-react", "name": "React", "category": "frontend", "level": "intermediate", "estimatedWeeks": 6, "prerequisites": ["s-html-css"] },
+    { "id": "s-system-design", "name": "System Design", "category": "architecture", "level": "advanced", "estimatedWeeks": 8, "prerequisites": ["s-react"] },
+    { "id": "s-ml-fund", "name": "ML Foundations", "category": "ai", "level": "intermediate", "estimatedWeeks": 8, "prerequisites": [] },
+    { "id": "s-mlops", "name": "MLOps", "category": "ai", "level": "advanced", "estimatedWeeks": 10, "prerequisites": ["s-ml-fund"] },
+    { "id": "s-leadership", "name": "Leadership", "category": "management", "level": "advanced", "estimatedWeeks": 6, "prerequisites": ["s-system-design"] }
+  ],
+  "roles": [
+    { "id": "r-junior-fe", "name": "Junior Frontend Engineer", "family": "engineering", "level": "beginner", "track": "t-eng-ic", "futureRole": false, "requiredSkills": ["s-html-css"], "optionalSkills": ["s-react"], "certifications": [] },
+    { "id": "r-fe", "name": "Frontend Engineer", "family": "engineering", "level": "mid", "track": "t-eng-ic", "futureRole": false, "requiredSkills": ["s-html-css", "s-react"], "optionalSkills": [], "certifications": [] },
+    { "id": "r-staff-fe", "name": "Staff Frontend Engineer", "family": "engineering", "level": "staff", "track": "t-eng-ic", "futureRole": false, "requiredSkills": ["s-react", "s-system-design"], "optionalSkills": ["s-leadership"], "certifications": [] },
+    { "id": "r-ml-engineer", "name": "ML Engineer", "family": "ai", "level": "senior", "track": "t-ai", "futureRole": true, "requiredSkills": ["s-ml-fund", "s-mlops", "s-system-design"], "optionalSkills": [], "certifications": ["c-mlops"] },
+    { "id": "r-eng-manager", "name": "Engineering Manager", "family": "management", "level": "director", "track": "t-mgmt", "futureRole": false, "requiredSkills": ["s-system-design", "s-leadership"], "optionalSkills": [], "certifications": [] }
+  ],
+  "transitions": [
+    { "fromRoleId": "r-junior-fe", "toRoleId": "r-fe", "difficulty": 2, "estimatedMonths": 12, "recommended": true, "pathType": "individual_contributor" },
+    { "fromRoleId": "r-fe", "toRoleId": "r-staff-fe", "difficulty": 3, "estimatedMonths": 24, "recommended": true, "pathType": "individual_contributor" },
+    { "fromRoleId": "r-staff-fe", "toRoleId": "r-eng-manager", "difficulty": 4, "estimatedMonths": 18, "recommended": true, "pathType": "management" },
+    { "fromRoleId": "r-fe", "toRoleId": "r-ml-engineer", "difficulty": 5, "estimatedMonths": 20, "recommended": false, "pathType": "cross_domain" }
+  ],
+  "tracks": [
+    { "id": "t-eng-ic", "name": "Engineering IC", "type": "engineering" },
+    { "id": "t-mgmt", "name": "Engineering Management", "type": "management" },
+    { "id": "t-ai", "name": "AI Engineering", "type": "ai" }
+  ],
+  "certifications": [
+    { "id": "c-mlops", "name": "Professional MLOps", "provider": "Cloud Provider", "skillIds": ["s-mlops"] }
+  ]
+}
