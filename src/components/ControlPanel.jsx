@@ -1,3 +1,7 @@
+function formatPath(path, roleById) {
+  return path.map((roleId) => roleById.get(roleId)?.name || roleId).join(" → ");
+}
+
 function ControlPanel({
   roles,
   tracks,
@@ -9,11 +13,14 @@ function ControlPanel({
   onTargetRoleChange,
   onSearchChange,
   onTrackFilterChange,
+  pathOptions,
   recommendedPath,
   missingSkills,
+  timeline,
   skills,
 }) {
   const skillMap = new Map(skills.map((skill) => [skill.id, skill.name]));
+  const roleById = new Map(roles.map((role) => [role.id, role]));
 
   return (
     <section className="panel">
@@ -61,7 +68,16 @@ function ControlPanel({
 
       <div className="insights">
         <h2>Recommended path</h2>
-        <p>{recommendedPath.length > 0 ? recommendedPath.join(" → ") : "Choose current and target roles."}</p>
+        <p>{recommendedPath.length > 0 ? formatPath(recommendedPath, roleById) : "Choose current and target roles."}</p>
+
+        <h3>Path comparisons (top 3)</h3>
+        <ul>
+          {pathOptions.length > 0 ? pathOptions.map((path) => <li key={path.join("->")}>{formatPath(path, roleById)}</li>) : <li>No comparable paths yet.</li>}
+        </ul>
+
+        <h3>Timeline estimate</h3>
+        <p>{timeline.totalMonths > 0 ? `${timeline.totalMonths} months total` : "No timeline available"}</p>
+
         <h3>Missing skills</h3>
         <ul>
           {missingSkills.length > 0 ? missingSkills.map((skillId) => <li key={skillId}>{skillMap.get(skillId) || skillId}</li>) : <li>No gap detected</li>}

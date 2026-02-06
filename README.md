@@ -1,11 +1,43 @@
 # Career Path Visualization Platform (React + D3)
 
+## Is this complete?
+This is now a **working frontend scaffold** with core features and an extensible architecture. It is production-oriented, but still a base to evolve (e.g., schema validation in CI, worker-based path computation, large-graph rendering mode).
+
+## How to test locally
+
+### Prerequisites
+- Node.js 20+
+- npm 10+
+
+### Run locally
+```bash
+npm install
+npm run dev
+```
+Then open: `http://localhost:5173`
+
+### Build check
+```bash
+npm run build
+npm run preview
+```
+Then open: `http://localhost:4173`
+
+### What to verify manually
+1. Select a **current role** and **target role**.
+2. Confirm a **recommended path** appears (role names, not IDs).
+3. Confirm **top 3 path comparisons** are shown when multiple paths exist.
+4. Confirm **timeline estimate** updates with selected route.
+5. Confirm **missing skills** list updates.
+6. Use mouse wheel + drag to verify graph **zoom/pan**.
+7. Use **search** and **track filter** to verify node filtering.
+
 ## System Design
 
 ### 1) Frontend-only architecture
 - **Presentation layer**: React functional components (`src/components`) and app composition (`src/App.jsx`).
 - **Visualization layer**: D3 force-directed graph renderer in `CareerGraph` for nodes (roles) and edges (transitions).
-- **Domain logic layer**: Path and skill-gap algorithms in `src/utils/pathing.js`.
+- **Domain logic layer**: Path, comparison, skill-gap, and timeline algorithms in `src/utils/pathing.js`.
 - **Data access layer**: Lazy JSON dataset loading through dynamic imports in `src/services/dataLoader.js`.
 - **Data layer**: Versioned JSON files under `data/datasets/v1`, validated against schema in `data/schemas`.
 
@@ -23,8 +55,9 @@
 
 ### 4) UX features in this sample
 - Select current role and target role.
-- Compute shortest transition path.
+- Compute top path options, show recommended shortest path.
 - Show missing skills from role requirements along selected path.
+- Show timeline estimate (months) from transition metadata.
 - Search and track filtering.
 
 ## Folder Structure
@@ -65,12 +98,6 @@ Schema supports:
 - Transitions (difficulty, duration, path type)
 - Certifications
 - Multiple tracks (engineering, management, AI, industry-specific)
-
-## React + D3 implementation notes
-- `useCareerData` lazy-loads dataset by name.
-- `CareerGraph` transforms role and transition data into D3 simulation inputs.
-- `ControlPanel` remains data-driven and reusable.
-- `findShortestPath` and `getMissingSkillsForPath` are pure utilities.
 
 ## How to extend (JSON only)
 1. Add new skills to `skills`.
